@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA Konseptual – Navigasi Tanpa Reload</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            margin: 0;
+        }
+
+        header {
+            background: #0d6efd;
+            color: #fff;
+            padding: 1rem;
+        }
+
+        nav a {
+            color: #fff;
+            margin-right: 1rem;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        nav a.active {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SPA Konseptual</h1>
+        <nav>
+            <a href="#" data-page="home" class="active">Beranda</a>
+            <a href="#" data-page="about">Tentang</a>
+            <a href="#" data-page="contact">Kontak</a>
+        </nav>
+    </header>
+
+    <main id="app">
+        <!-- Konten akan diisi oleh JavaScript -->
+    </main>
+
+    <script>
+        const app = document.getElementById('app');
+        const navLinks = document.querySelectorAll('nav a');
+
+        const pages = {
+            home: `
+                <h2>Beranda</h2>
+                <p>Ini adalah konten beranda pada aplikasi SPA sederhana.</p>
+            `,
+            about: `
+                <h2>Tentang</h2>
+                <p>Halaman ini berisi informasi singkat tentang aplikasi.</p>
+            `,
+            contact: `
+                <h2>Kontak</h2>
+                <p>Silakan hubungi melalui email: <strong>info@example.com</strong></p>
+            `
+        };
+
+        function renderPage(pageName) {
+            app.innerHTML = pages[pageName] || '<h2>Halaman tidak ditemukan</h2>';
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                const page = link.dataset.page;
+
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                renderPage(page);
+            });
+        });
+
+        renderPage('home');
+    </script>
+</body>
+</html>
